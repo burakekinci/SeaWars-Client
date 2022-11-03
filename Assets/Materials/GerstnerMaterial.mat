@@ -32,6 +32,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_9432cbfed9a74a14aab1991dcef7c993:
+        m_Texture: {fileID: 2800000, guid: 1847c427ebed2b7469dd22667fe6e4e0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_bbe7307b28b14910a71a90eadea34733:
+        m_Texture: {fileID: 2800000, guid: fa5d115a347b71b4f8f1bea756ef335a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_f49ecfb6158a4959a3bc5aaeb0629e32:
+        m_Texture: {fileID: 2800000, guid: ad880b3336316d14ea4c9bd419db5542, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -49,12 +61,26 @@ Material:
     - Vector1_1: 2
     - Vector1_2: 2
     - Vector1_3: 3
+    - Vector1_4153e884b2d943fda8ce60bba3603556: 5
+    - Vector1_6104b16f7f2e47daaea24e4fa2b3feb3: 5.28
     - Vector1_700396f27ce74659a7503d95118f41cb: 3
     - Vector1_7dc90fd87fed4a8396abc1fa21668384: 1
+    - Vector1_818826750f804801be4395cf1f7fde44: 0.52
+    - Vector1_890eeaf79a0b4f1982dddf948ed1d374: -1.03
     - Vector1_906d8dd17720455cba9d68424a9b387a: 9
+    - Vector1_aca197f7502e4fc8bf032670ec1aab5e: -1
+    - Vector1_b041042320b74c0eba3b26ae53c70bf8: 0.8
     - Vector1_b53f5021bc8648169fd4f57baa425b79: 0
     m_Colors:
-    - Color_91898aed2bb5452f98c203ade1379a06: {r: 0.23538777, g: 0.14542535, b: 0.7169812, a: 0}
+    - Color_78be6116f4e34681b8bba9fcb78d220c: {r: 0.745283, g: 0.63630295, b: 0.63630295, a: 0}
+    - Color_91898aed2bb5452f98c203ade1379a06: {r: 0.2867507, g: 0.20630117, b: 0.7169812, a: 0}
+    - Color_c431fdf0131446209277453ded3ef2b2: {r: 0.41103587, g: 0.06959772, b: 0.6415094, a: 0}
+    - Vector2_2ad8d151026b44508fa02884cef12451: {r: 0.2, g: 0.2, b: 0, a: 0}
+    - Vector2_3ff4c9622b534750b145b04b9c65bad7: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - Vector2_92cd19888cbf4c5684587e9f707fff60: {r: 0.04, g: 0.04, b: 0, a: 0}
+    - Vector2_bb0c4f20189e45228f8d32b1ad0fa7c6: {r: 0.05, g: 0.05, b: 0, a: 0}
+    - Vector2_cfbc63eb8ab341519ade9c1ce517d419: {r: -0.1, g: 0.1, b: 0, a: 0}
+    - Vector2_ec612ce7adb84093810e36a983d721af: {r: -0.03, g: 0.03, b: 0, a: 0}
     - Vector3_1: {r: 0.1, g: 0, b: 0.06, a: 0}
     - Vector3_2: {r: 0.01, g: 0, b: 0, a: 0}
     - Vector3_3: {r: 0, g: 0, b: -0.12, a: 0}
