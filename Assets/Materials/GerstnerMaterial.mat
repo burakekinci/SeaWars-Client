@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5641901107369975507
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 4
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GerstnerMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: 442e37748b93ced46ba5a573d3574d8b, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_01c670bf178b45fdbb8a7428a7cbaa5c: 9
+    - Vector1_1: 2
+    - Vector1_2: 2
+    - Vector1_3: 3
+    - Vector1_700396f27ce74659a7503d95118f41cb: 3
+    - Vector1_7dc90fd87fed4a8396abc1fa21668384: 1
+    - Vector1_906d8dd17720455cba9d68424a9b387a: 9
+    - Vector1_b53f5021bc8648169fd4f57baa425b79: 0
+    m_Colors:
+    - Color_91898aed2bb5452f98c203ade1379a06: {r: 0.23538777, g: 0.14542535, b: 0.7169812, a: 0}
+    - Vector3_1: {r: 0.1, g: 0, b: 0.06, a: 0}
+    - Vector3_2: {r: 0.01, g: 0, b: 0, a: 0}
+    - Vector3_3: {r: 0, g: 0, b: -0.12, a: 0}
+    - Vector3_711c895434464691a4d071a6db44c96f: {r: 0.05, g: 0, b: 0.07, a: 0}
+    - Vector4_017f897ff6494c6eaa0abfb177ea91f5: {r: 1, g: 1.5, b: 2, a: 1.25}
+  m_BuildTextureStacks: []
