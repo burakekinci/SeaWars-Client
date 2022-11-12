@@ -34,8 +34,8 @@ public class BuoyancyObject : MonoBehaviour
     {
         floatersUnderWater = 0;
         for(int i=0; i < floaters.Length; i++)
-        {
-            float difference = floaters[i].position.y - oceanReader.HeightOfVertex(floaters[i].position);
+        {                                             //oceanReader.HeightOfVertex(floaters[i].position)
+            float difference = floaters[i].position.y - 0f;
 
             if (difference < 0)
             {
