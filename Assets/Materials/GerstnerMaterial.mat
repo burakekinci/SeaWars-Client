@@ -71,6 +71,13 @@ Material:
     - Vector1_aca197f7502e4fc8bf032670ec1aab5e: 5.05
     - Vector1_b041042320b74c0eba3b26ae53c70bf8: 0.95
     - Vector1_b53f5021bc8648169fd4f57baa425b79: 0
+    - _Amplitude1: 0
+    - _Amplitude2: 0.84
+    - _Amplitude3: 0
+    - _Amplitude4: 1
+    - _Depth: 9
+    - _Gravity: 9
+    - _Phase: 0
     m_Colors:
     - Color_78be6116f4e34681b8bba9fcb78d220c: {r: 1, g: 1, b: 1, a: 1}
     - Color_91898aed2bb5452f98c203ade1379a06: {r: 0.09500711, g: 0.41053605, b: 0.5754717, a: 1}
@@ -86,4 +93,9 @@ Material:
     - Vector3_3: {r: 0.015, g: 0, b: 0.015, a: 0}
     - Vector3_711c895434464691a4d071a6db44c96f: {r: 0.015, g: 0, b: 0.035, a: 0}
     - Vector4_017f897ff6494c6eaa0abfb177ea91f5: {r: 2.25, g: 2.82, b: 0.94, a: 3.47}
+    - _Direction1: {r: 0, g: 0, b: 0.01, a: 0}
+    - _Direction2: {r: -0.01, g: 0, b: 0, a: 0}
+    - _Direction3: {r: 0.01, g: 0, b: 0, a: 0}
+    - _Direction4: {r: 0, g: 0, b: -0.01, a: 0}
+    - _TimeScales: {r: 0, g: 0.51, b: 1, a: 0}
   m_BuildTextureStacks: []
