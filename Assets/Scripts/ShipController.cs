@@ -9,29 +9,44 @@ public class ShipController : MonoBehaviour
     public float thrustPower;
     public float thrustPowerIncrease;
     public float EnginePower;
+
+    [SerializeField]
+    private float damping = 10;
+
+    [SerializeField]
+    float foamParticleMultiplier;
+
+    [SerializeField]
+    float foamParticleBase;
     
-    Rigidbody rigidbody;
+    ParticleSystem.EmissionModule motorFoam;
+    Rigidbody rb;
+    
     void Start()
     {
-        rigidbody = gameObject.GetComponent<Rigidbody>();    
+        rb = gameObject.GetComponent<Rigidbody>();
+        motorFoam = transform.Find("FoamParticle").GetComponent<ParticleSystem>().emission;  
     }
 
     void FixedUpdate()
     {
-        var localVel = transform.InverseTransformDirection(rigidbody.velocity);
-        
+        var localVel = transform.InverseTransformDirection(rb.velocity);
+        motorFoam.rateOverTime = thrustPower * foamParticleMultiplier + foamParticleBase;
+
         if(Input.GetAxis("Vertical")>0){
             thrustPower += thrustPowerIncrease;
         }else if(Input.GetAxis("Vertical")<0){
             thrustPower -= thrustPowerIncrease;
         }
 
-        if(localVel.x!=0f){
-            transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y + Input.GetAxis("Horizontal") * SteerSpeed * Time.fixedDeltaTime * localVel.x / 10, 0);
+        if(localVel.z!=0f && Input.GetAxis("Horizontal")!=0f){
+            var desiredQuaternion = Quaternion.Euler(0,transform.rotation.eulerAngles.y + Input.GetAxis("Horizontal") * SteerSpeed * localVel.z / 10, 0);
+            //transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y + Input.GetAxis("Horizontal") * SteerSpeed * Time.fixedDeltaTime * localVel.z / 10, 0);
+            transform.rotation = Quaternion.Lerp(transform.rotation,desiredQuaternion, Time.fixedDeltaTime * damping);
         }
 
         if(thrustPower!=0){
-            rigidbody.AddRelativeForce(Vector3.right * thrustPower * EnginePower *Time.deltaTime);
+            rb.AddRelativeForce(Vector3.forward * thrustPower * EnginePower *Time.deltaTime);
         }
 
         thrustPower = Mathf.Clamp(thrustPower,-15,100);
