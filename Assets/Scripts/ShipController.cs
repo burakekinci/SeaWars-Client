@@ -5,11 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ShipController : MonoBehaviour
 {
-    public float SteerSpeed;
+    public float thrustPowerIncrease = 0.5f;
+    public float steerSpeed = 20;
     public float thrustPower;
-    public float thrustPowerIncrease;
-    public float EnginePower;
-
+    public float enginePower = 1000;
+    public float crouchConstant = 190; //light cruiser -> 190, heavy cruiser->150
+    public float maxReverseThrustPower= 30;   
     [SerializeField]
     private float damping = 10;
 
@@ -21,18 +22,20 @@ public class ShipController : MonoBehaviour
     
     ParticleSystem.EmissionModule motorFoam;
     Rigidbody rb;
+    public float maxSpeed;
     
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        motorFoam = transform.Find("FoamParticle").GetComponent<ParticleSystem>().emission;  
+        motorFoam = transform.Find("FoamParticle").GetComponent<ParticleSystem>().emission;
+        motorFoam.rateOverTime = 0;
+        maxSpeed = Mathf.Sqrt(enginePower / rb.mass)  * crouchConstant;
     }
 
     void FixedUpdate()
     {
         var localVel = transform.InverseTransformDirection(rb.velocity);
-        motorFoam.rateOverTime = thrustPower * foamParticleMultiplier + foamParticleBase;
-
+       
         if(Input.GetAxis("Vertical")>0){
             thrustPower += thrustPowerIncrease;
         }else if(Input.GetAxis("Vertical")<0){
@@ -40,16 +43,24 @@ public class ShipController : MonoBehaviour
         }
 
         if(localVel.z!=0f && Input.GetAxis("Horizontal")!=0f){
-            var desiredQuaternion = Quaternion.Euler(0,transform.rotation.eulerAngles.y + Input.GetAxis("Horizontal") * SteerSpeed * localVel.z / 10, 0);
+            var desiredQuaternion = Quaternion.Euler(0,transform.rotation.eulerAngles.y + Input.GetAxis("Horizontal") * steerSpeed * localVel.z / 10, 0);
             //transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y + Input.GetAxis("Horizontal") * SteerSpeed * Time.fixedDeltaTime * localVel.z / 10, 0);
             transform.rotation = Quaternion.Lerp(transform.rotation,desiredQuaternion, Time.fixedDeltaTime * damping);
         }
 
-        if(thrustPower!=0){
-            rb.AddRelativeForce(Vector3.forward * thrustPower * EnginePower *Time.deltaTime);
+        if(localVel.magnitude>0f){
+            motorFoam.rateOverTime = thrustPower * foamParticleMultiplier + foamParticleBase;
+        }else{
+            motorFoam.rateOverTime = foamParticleBase;
         }
 
-        thrustPower = Mathf.Clamp(thrustPower,-15,100);
+        if(thrustPower!=0){
+            rb.AddRelativeForce(Vector3.forward * thrustPower * enginePower *Time.deltaTime);
+        }
+
+        thrustPower = Mathf.Clamp(thrustPower,-maxReverseThrustPower,100);
+        
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity,maxSpeed);
     }
 
 

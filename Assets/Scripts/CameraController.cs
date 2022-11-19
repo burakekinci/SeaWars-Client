@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
 
     private float _rotationX;
     private float _rotationY;
+    public float turretRotateOffset;
     private float _mouseX;
     private float _mouseY;
 
@@ -21,11 +22,18 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Transform _target;
 
+    public Transform turret;
+
     [SerializeField]
     private float _distanceFromTarget=10f;
     
     private Vector3 _currentRotation;
+    private Vector3 _currentTurretRotation;
     private Vector3 _smoothVelocity=Vector3.zero;
+    private Vector3 _smoothTurretVelocity=Vector3.zero;
+
+    private Vector3 _cameraLookVector;
+    private Vector3 _turretLookVector;
 
     [SerializeField]
     private float _smoothTime = 0.5f;
@@ -52,6 +60,14 @@ public class CameraController : MonoBehaviour
         transform.localEulerAngles = _currentRotation;
         transform.position = _target.position - transform.forward * _distanceFromTarget;
 
+        _cameraLookVector = new Vector3(transform.position.x,transform.position.z);
+        _turretLookVector = new Vector3(turret.position.x,turret.position.z);
+        
+        
+        Vector3 turretNextRotation = new Vector3(-_rotationX-turretRotateOffset,_rotationY) + transform.forward - turret.forward;
+        //_currentTurretRotation = turret.transform.localEulerAngles;
+        _currentTurretRotation = Vector3.SmoothDamp(_currentTurretRotation,turretNextRotation,ref _smoothTurretVelocity,_smoothTime);
+        turret.eulerAngles = _currentTurretRotation;
     }
 
 }
