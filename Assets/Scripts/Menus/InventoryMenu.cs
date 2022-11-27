@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class InventoryMenu : MonoBehaviour
 {
     [SerializeField] public float tmpPlayerMoney{get;  set;}
-    [SerializeField] private TMP_Text playerMoneyText;
+    [SerializeField] private Text playerMoneyText;
 
     public List<Ship> tmpPlayerShips{get; set;} 
 
     private void Awake() {
-        playerMoneyText = transform.Find("MoneyInt_Label").GetComponent<TMP_Text>();
+        playerMoneyText = transform.Find("MoneyInt_Label").GetComponent<Text>();
     }
 
     public void OnClick_Back(){
@@ -43,12 +43,12 @@ public class InventoryMenu : MonoBehaviour
     }
 
     public void SetMoney(){
-        playerMoneyText.SetText(tmpPlayerMoney.ToString()+'$');
+        playerMoneyText.text = tmpPlayerMoney.ToString()+'$';
     }
 
     public void SetMoney(float price){
         tmpPlayerMoney -= price;
-        playerMoneyText.SetText(tmpPlayerMoney.ToString()+'$');
+        playerMoneyText.text = tmpPlayerMoney.ToString()+'$';
     }
 
     public string GetShipName(int buttonId){

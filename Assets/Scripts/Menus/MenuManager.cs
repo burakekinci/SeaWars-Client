@@ -40,6 +40,10 @@ public static class MenuManager
 
     }
 
+    public static void CloseMenu(GameObject callingMenu){
+        callingMenu.SetActive(false);
+    }
+
     public static void QuitGame(){
         Application.Quit();
         Debug.Log("Game Closed via Quit...");

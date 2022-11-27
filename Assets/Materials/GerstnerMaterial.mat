@@ -62,7 +62,7 @@ Material:
     - Vector1_2: 2.6
     - Vector1_3: 1.43
     - Vector1_4153e884b2d943fda8ce60bba3603556: 3.22
-    - Vector1_6104b16f7f2e47daaea24e4fa2b3feb3: 4.84
+    - Vector1_6104b16f7f2e47daaea24e4fa2b3feb3: 3.58
     - Vector1_700396f27ce74659a7503d95118f41cb: 1.7
     - Vector1_7dc90fd87fed4a8396abc1fa21668384: 1
     - Vector1_818826750f804801be4395cf1f7fde44: 0.53
@@ -95,7 +95,7 @@ Material:
     - Vector4_017f897ff6494c6eaa0abfb177ea91f5: {r: 2.25, g: 2.82, b: 0.94, a: 3.47}
     - _Direction1: {r: 0, g: 0, b: 0.17, a: 0}
     - _Direction2: {r: -0.1, g: 0, b: 0.1, a: 0}
-    - _Direction3: {r: 0.04, g: 0, b: 0.03, a: 0}
+    - _Direction3: {r: 0.04, g: 0, b: 0.02, a: 0}
     - _Direction4: {r: 0.12, g: 0, b: -0.22, a: 0}
-    - _TimeScales: {r: 0, g: 0.51, b: 1, a: 0}
+    - _TimeScales: {r: 0.25, g: 0.51, b: 1, a: 0.4}
   m_BuildTextureStacks: []
