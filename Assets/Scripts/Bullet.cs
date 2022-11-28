@@ -25,11 +25,12 @@ public class Bullet : MonoBehaviour
     }
 
 
-    void OnTriggerEnter(Collider other) {
-        if(other.CompareTag("Enemy")){
+    void OnCollisionEnter(Collision other) {
+        if(other.gameObject.CompareTag("Enemy")){
             //TODO:damagePower miktarında hasar ver
             Debug.Log("temas");
             Destroy(other.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
