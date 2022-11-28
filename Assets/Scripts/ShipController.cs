@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 [RequireComponent(typeof(Rigidbody))]
-public class ShipController : MonoBehaviour
+public class ShipController : NetworkBehaviour
 {
     public float thrustPowerIncrease = 0.5f;
     public float steerSpeed = 20;
@@ -11,6 +12,8 @@ public class ShipController : MonoBehaviour
     public float enginePower = 1000;
     public float crouchConstant = 190; //light cruiser -> 190, heavy cruiser->150
     public float maxReverseThrustPower= 30;   
+    public Camera cameraPrefab;
+
     [SerializeField]
     private float damping = 10;
 
@@ -22,18 +25,32 @@ public class ShipController : MonoBehaviour
     
     ParticleSystem.EmissionModule motorFoam;
     Rigidbody rb;
+    Camera playerCamera;
     public float maxSpeed;
     
+    private void Awake() {
+        playerCamera = Instantiate(cameraPrefab,transform.position,Quaternion.identity);
+    }
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
         motorFoam = transform.Find("FoamParticle").GetComponent<ParticleSystem>().emission;
         motorFoam.rateOverTime = 0;
         maxSpeed = Mathf.Sqrt(enginePower / rb.mass)  * crouchConstant;
+        
+        if(!isLocalPlayer){
+            playerCamera.gameObject.SetActive(false);
+        }
+
     }
 
     void FixedUpdate()
     {
+        if(!isLocalPlayer){
+            return;
+        }
+
         var localVel = transform.InverseTransformDirection(rb.velocity);
        
         if(Input.GetAxis("Vertical")>0){

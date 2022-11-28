@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class ShootingController : MonoBehaviour
+public class ShootingController : NetworkBehaviour
 {
     public GameObject bulletProjectile;
     public Transform firePointTransform;
@@ -20,6 +21,11 @@ public class ShootingController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!isLocalPlayer){
+            return;
+        }
+
+
         if(Input.GetButtonDown("Fire1") && allowFire){
             StartCoroutine(Fire());
         }   
