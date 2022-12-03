@@ -29,7 +29,8 @@ public class ShipController : NetworkBehaviour
     public float maxSpeed;
     
     private void Awake() {
-        playerCamera = Instantiate(cameraPrefab,transform.position,Quaternion.identity);
+        if(isLocalPlayer)
+            playerCamera = Instantiate(cameraPrefab,transform.position,Quaternion.identity);
     }
 
     void Start()
@@ -47,37 +48,37 @@ public class ShipController : NetworkBehaviour
 
     void FixedUpdate()
     {
-        if(!isLocalPlayer){
-            return;
-        }
-
-        var localVel = transform.InverseTransformDirection(rb.velocity);
-       
-        if(Input.GetAxis("Vertical")>0){
-            thrustPower += thrustPowerIncrease;
-        }else if(Input.GetAxis("Vertical")<0){
-            thrustPower -= thrustPowerIncrease;
-        }
-
-        if(localVel.z!=0f && Input.GetAxis("Horizontal")!=0f){
-            var desiredQuaternion = Quaternion.Euler(0,transform.rotation.eulerAngles.y + Input.GetAxis("Horizontal") * steerSpeed * localVel.z / 10, 0);
-            //transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y + Input.GetAxis("Horizontal") * SteerSpeed * Time.fixedDeltaTime * localVel.z / 10, 0);
-            transform.rotation = Quaternion.Lerp(transform.rotation,desiredQuaternion, Time.fixedDeltaTime * damping);
-        }
-
-        if(localVel.magnitude>0f){
-            motorFoam.rateOverTime = thrustPower * foamParticleMultiplier + foamParticleBase;
-        }else{
-            motorFoam.rateOverTime = foamParticleBase;
-        }
-
-        if(thrustPower!=0){
-            rb.AddRelativeForce(Vector3.forward * thrustPower * enginePower *Time.deltaTime);
-        }
-
-        thrustPower = Mathf.Clamp(thrustPower,-maxReverseThrustPower,100);
+        if(isLocalPlayer)
+        {
+            var localVel = transform.InverseTransformDirection(rb.velocity);
         
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity,maxSpeed);
+            if(Input.GetAxis("Vertical")>0){
+                thrustPower += thrustPowerIncrease;
+            }else if(Input.GetAxis("Vertical")<0){
+                thrustPower -= thrustPowerIncrease;
+            }
+
+            if(localVel.z!=0f && Input.GetAxis("Horizontal")!=0f){
+                var desiredQuaternion = Quaternion.Euler(0,transform.rotation.eulerAngles.y + Input.GetAxis("Horizontal") * steerSpeed * localVel.z / 10, 0);
+                //transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y + Input.GetAxis("Horizontal") * SteerSpeed * Time.fixedDeltaTime * localVel.z / 10, 0);
+                transform.rotation = Quaternion.Lerp(transform.rotation,desiredQuaternion, Time.fixedDeltaTime * damping);
+            }
+
+            if(localVel.magnitude>0f){
+                motorFoam.rateOverTime = thrustPower * foamParticleMultiplier + foamParticleBase;
+            }else{
+                motorFoam.rateOverTime = foamParticleBase;
+            }
+
+            if(thrustPower!=0){
+                rb.AddRelativeForce(Vector3.forward * thrustPower * enginePower *Time.deltaTime);
+            }
+
+            thrustPower = Mathf.Clamp(thrustPower,-maxReverseThrustPower,100);
+            
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity,maxSpeed);
+        
+        }
     }
 
 

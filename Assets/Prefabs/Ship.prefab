@@ -337,6 +337,7 @@ GameObject:
   - component: {fileID: -7158195741451814492}
   - component: {fileID: 5049419140899773290}
   - component: {fileID: -2851851723513986905}
+  - component: {fileID: 7027879734861777627}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Player
@@ -501,13 +502,41 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   target: {fileID: 3703354277834206434}
-  clientAuthority: 1
+  clientAuthority: 0
   onlySyncOnChange: 1
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
   rotationSensitivity: 0.01
   scaleSensitivity: 0.01
   syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!114 &7027879734861777627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3703354277834206435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 3703354278034688001}
+  clientAuthority: 0
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 5
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  syncPosition: 0
   syncRotation: 1
   syncScale: 0
   showGizmos: 0

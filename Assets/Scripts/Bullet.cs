@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : NetworkBehaviour
 {
     public float damagePower = 10f;
     private Rigidbody rb;
@@ -19,18 +20,19 @@ public class Bullet : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.right);
     }
 
+    [Server]
     IEnumerator SelfDestruct(){
         yield return new WaitForSeconds(10f);
-        Destroy(gameObject);
+        NetworkServer.Destroy(gameObject);
     }
 
-
+    [ServerCallback]
     void OnCollisionEnter(Collision other) {
         if(other.gameObject.CompareTag("Enemy")){
             //TODO:damagePower miktarında hasar ver
             Debug.Log("temas");
-            Destroy(other.gameObject);
-            Destroy(this.gameObject);
+            NetworkServer.Destroy(other.gameObject);
+            NetworkServer.Destroy(this.gameObject);
         }
     }
 }
