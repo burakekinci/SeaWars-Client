@@ -8,7 +8,7 @@ public class ShipController : NetworkBehaviour
 {
     public float thrustPowerIncrease = 0.5f;
     public float steerSpeed = 20;
-    public float thrustPower;
+    [SyncVar] public float thrustPower;
     public float enginePower = 1000;
     public float crouchConstant = 190; //light cruiser -> 190, heavy cruiser->150
     public float maxReverseThrustPower= 30;   
@@ -35,16 +35,19 @@ public class ShipController : NetworkBehaviour
 
     void Start()
     {
+        Debug.Log("ship started");
         rb = gameObject.GetComponent<Rigidbody>();
         motorFoam = transform.Find("FoamParticle").GetComponent<ParticleSystem>();
         
         motorFoamEmission = motorFoam.emission;
         motorFoamEmission.rateOverTime = 0;
         maxSpeed = Mathf.Sqrt(enginePower / rb.mass)  * crouchConstant;
+       
 
         if(isLocalPlayer){
             playerCamera = Instantiate(cameraPrefab,transform.position,Quaternion.identity);
             CmdStartParticles();
+            
         }else{
             if(playerCamera!=null)
                 playerCamera.gameObject.SetActive(false);
@@ -61,9 +64,9 @@ public class ShipController : NetworkBehaviour
         if(isLocalPlayer)
         {
             if(Input.GetAxis("Vertical")>0){
-                thrustPower += thrustPowerIncrease;
+                CmdChangeThrustPower(thrustPowerIncrease);
             }else if(Input.GetAxis("Vertical")<0){
-                thrustPower -= thrustPowerIncrease;
+                CmdChangeThrustPower(-thrustPowerIncrease);
             }
 
             if(localVel.z!=0f && Input.GetAxis("Horizontal")!=0f){
@@ -93,11 +96,18 @@ public class ShipController : NetworkBehaviour
     [Command]
     void CmdStartParticles(){
         RPCStartParticles();
+        Debug.Log("command sended");
+    }
+
+    [Command]
+    void CmdChangeThrustPower(float increaseValue){
+        thrustPower += increaseValue;
     }
 
     [ClientRpc]
     void RPCStartParticles(){
         DoStartParticles();
+        Debug.Log("rpc recevied");
     }
 
     void DoStartParticles(){

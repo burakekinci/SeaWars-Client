@@ -403,6 +403,7 @@ MonoBehaviour:
   damping: 0.5
   foamParticleMultiplier: 10
   foamParticleBase: 0
+  playerCamera: {fileID: 0}
   maxSpeed: 0
 --- !u!114 &3703354277834206433
 MonoBehaviour:
@@ -777,10 +778,10 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
-  useRigidbodyForVelocity: 1
+  useRigidbodyForVelocity: 0
   startDelay:
     serializedVersion: 2
     minMaxState: 0
