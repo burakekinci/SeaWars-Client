@@ -23,35 +23,43 @@ public class ShipController : NetworkBehaviour
     [SerializeField]
     float foamParticleBase;
     
-    ParticleSystem.EmissionModule motorFoam;
+    ParticleSystem motorFoam;
+    ParticleSystem.EmissionModule motorFoamEmission;
     Rigidbody rb;
-    Camera playerCamera;
+    public Camera playerCamera;
     public float maxSpeed;
     
     private void Awake() {
-        if(isLocalPlayer)
-            playerCamera = Instantiate(cameraPrefab,transform.position,Quaternion.identity);
+        Debug.Log("awaked");
     }
 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        motorFoam = transform.Find("FoamParticle").GetComponent<ParticleSystem>().emission;
-        motorFoam.rateOverTime = 0;
-        maxSpeed = Mathf.Sqrt(enginePower / rb.mass)  * crouchConstant;
+        motorFoam = transform.Find("FoamParticle").GetComponent<ParticleSystem>();
         
-        if(!isLocalPlayer){
-            playerCamera.gameObject.SetActive(false);
+        motorFoamEmission = motorFoam.emission;
+        motorFoamEmission.rateOverTime = 0;
+        maxSpeed = Mathf.Sqrt(enginePower / rb.mass)  * crouchConstant;
+
+        if(isLocalPlayer){
+            playerCamera = Instantiate(cameraPrefab,transform.position,Quaternion.identity);
+            CmdStartParticles();
+        }else{
+            if(playerCamera!=null)
+                playerCamera.gameObject.SetActive(false);
+            else{
+                Debug.Log("Clientların camerası NULL -> olması gereken de bu zaten");
+            }
         }
 
     }
 
     void FixedUpdate()
     {
+        var localVel = transform.InverseTransformDirection(rb.velocity);
         if(isLocalPlayer)
         {
-            var localVel = transform.InverseTransformDirection(rb.velocity);
-        
             if(Input.GetAxis("Vertical")>0){
                 thrustPower += thrustPowerIncrease;
             }else if(Input.GetAxis("Vertical")<0){
@@ -64,12 +72,6 @@ public class ShipController : NetworkBehaviour
                 transform.rotation = Quaternion.Lerp(transform.rotation,desiredQuaternion, Time.fixedDeltaTime * damping);
             }
 
-            if(localVel.magnitude>0f){
-                motorFoam.rateOverTime = thrustPower * foamParticleMultiplier + foamParticleBase;
-            }else{
-                motorFoam.rateOverTime = foamParticleBase;
-            }
-
             if(thrustPower!=0){
                 rb.AddRelativeForce(Vector3.forward * thrustPower * enginePower *Time.deltaTime);
             }
@@ -79,7 +81,26 @@ public class ShipController : NetworkBehaviour
             rb.velocity = Vector3.ClampMagnitude(rb.velocity,maxSpeed);
         
         }
+
+        if(localVel.magnitude>0f){
+            motorFoamEmission.rateOverTime = thrustPower * foamParticleMultiplier + foamParticleBase;
+        }else{
+            motorFoamEmission.rateOverTime = foamParticleBase;
+        }
     }
 
+    //Networkings
+    [Command]
+    void CmdStartParticles(){
+        RPCStartParticles();
+    }
 
+    [ClientRpc]
+    void RPCStartParticles(){
+        DoStartParticles();
+    }
+
+    void DoStartParticles(){
+        motorFoam.Play();
+    }
 }

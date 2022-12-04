@@ -10,7 +10,7 @@ public class ShootingController : NetworkBehaviour
 
     public float fireCooldownInSeconds = 1f;
     public float launchVelocity = 750f;
-    private bool allowFire = true;
+    private float time;
 
     // Start is called before the first frame update
     void Start()
@@ -21,24 +21,16 @@ public class ShootingController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        time += Time.deltaTime;
+        float nextTimeToFire = 1 / fireCooldownInSeconds;
         if(isLocalPlayer)
         {
-            if(Input.GetButtonDown("Fire1") && allowFire){
-                StartCoroutine(Fire());
-        }   
+            if(Input.GetButtonDown("Fire1") && time>= nextTimeToFire){
+                CMDFire();
+            }   
                     
         }
 
-    }
-
-    [Command]
-    IEnumerator Fire(){
-        allowFire=false;
-        GameObject launchedBullet =  Instantiate(bulletProjectile,firePointTransform.transform.position,firePointTransform.transform.rotation);
-        NetworkServer.Spawn(launchedBullet);
-        launchedBullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0,launchVelocity,0),ForceMode.Impulse);
-        yield return new WaitForSeconds(fireCooldownInSeconds);
-        allowFire=true;
     }
 
     [ClientRpc]
@@ -46,6 +38,13 @@ public class ShootingController : NetworkBehaviour
         //setTrigger effects, animations
     }
 
+    [Command]
+    void CMDFire(){
+        time=0;
+        GameObject launchedBullet =  Instantiate(bulletProjectile,firePointTransform.transform.position,firePointTransform.transform.rotation);
+        NetworkServer.Spawn(launchedBullet);
+        RpcOnFire();
+    }
 
 
 }

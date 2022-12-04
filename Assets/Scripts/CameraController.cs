@@ -23,7 +23,7 @@ public class CameraController : NetworkBehaviour
     
     public Transform _target;
     public Transform turret;
-    public GameObject mainCamera;
+    public Camera mainCamera;
 
     [SerializeField]
     private float _distanceFromTarget=10f;
@@ -44,7 +44,7 @@ public class CameraController : NetworkBehaviour
     {
         _target = gameObject.transform;
         turret = gameObject.transform.Find("Turret").transform.Find("GunRoot");
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        
 
         if(_target == null || turret == null || mainCamera == null){
             Debug.Log("not assigned properly");
@@ -58,7 +58,10 @@ public class CameraController : NetworkBehaviour
         if(!isLocalPlayer){
             return;
         }
-
+        mainCamera = gameObject.GetComponent<ShipController>().playerCamera;
+        if(mainCamera == null){
+            return;
+        }
         _mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity;
         _mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity;
 

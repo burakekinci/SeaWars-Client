@@ -6,13 +6,16 @@ using UnityEngine;
 public class Bullet : NetworkBehaviour
 {
     public float damagePower = 10f;
+    public float launchVelocity = 200f;
+    public float lifeTime = 5f;
     private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        StartCoroutine(SelfDestruct());
+        Invoke(nameof(SelfDestruct),lifeTime);
+        rb.AddRelativeForce(new Vector3(0,launchVelocity,0),ForceMode.Impulse);
     }
 
     void Update(){
@@ -21,18 +24,17 @@ public class Bullet : NetworkBehaviour
     }
 
     [Server]
-    IEnumerator SelfDestruct(){
-        yield return new WaitForSeconds(10f);
+    void SelfDestruct(){
         NetworkServer.Destroy(gameObject);
     }
 
     [ServerCallback]
     void OnCollisionEnter(Collision other) {
-        if(other.gameObject.CompareTag("Enemy")){
+        //if(other.gameObject.CompareTag("Enemy")){
             //TODO:damagePower miktarında hasar ver
             Debug.Log("temas");
             NetworkServer.Destroy(other.gameObject);
             NetworkServer.Destroy(this.gameObject);
-        }
+        //}
     }
 }
