@@ -43,12 +43,12 @@ public class CameraController : NetworkBehaviour
     void Start()
     {
         _target = gameObject.transform;
-        turret = gameObject.transform.Find("Turret").transform.Find("GunRoot");
+        /* turret = gameObject.transform.Find("Turret").transform.Find("GunRoot");
         
 
         if(_target == null || turret == null || mainCamera == null){
             Debug.Log("not assigned properly");
-        }
+        } */
         
     }
 

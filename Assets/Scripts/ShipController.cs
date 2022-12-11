@@ -23,7 +23,7 @@ public class ShipController : NetworkBehaviour
     [SerializeField]
     float foamParticleBase;
     
-    ParticleSystem motorFoam;
+    [SerializeField] ParticleSystem motorFoam;
     ParticleSystem.EmissionModule motorFoamEmission;
     Rigidbody rb;
     public Camera playerCamera;
@@ -37,7 +37,7 @@ public class ShipController : NetworkBehaviour
     {
         Debug.Log("ship started");
         rb = gameObject.GetComponent<Rigidbody>();
-        motorFoam = transform.Find("FoamParticle").GetComponent<ParticleSystem>();
+        
         
         motorFoamEmission = motorFoam.emission;
         motorFoamEmission.rateOverTime = 0;
@@ -58,8 +58,15 @@ public class ShipController : NetworkBehaviour
 
     }
 
+    public override void OnStartClient()
+    {
+        motorFoam.transform.localPosition = new Vector3(motorFoam.transform.localPosition.x,-2f,18f);
+        Debug.Log("clientStarted and particle pos updated");  
+    }
+
     void FixedUpdate()
     {
+
         var localVel = transform.InverseTransformDirection(rb.velocity);
         if(isLocalPlayer)
         {
