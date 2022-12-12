@@ -37,8 +37,9 @@ public class ShipController : NetworkBehaviour
     {
         Debug.Log("ship started");
         rb = gameObject.GetComponent<Rigidbody>();
-        
-        
+       
+       
+        Debug.Log("init test");
         motorFoamEmission = motorFoam.emission;
         motorFoamEmission.rateOverTime = 0;
         maxSpeed = Mathf.Sqrt(enginePower / rb.mass)  * crouchConstant;
@@ -46,7 +47,6 @@ public class ShipController : NetworkBehaviour
 
         if(isLocalPlayer){
             playerCamera = Instantiate(cameraPrefab,transform.position,Quaternion.identity);
-            CmdStartParticles();
             
         }else{
             if(playerCamera!=null)
@@ -60,7 +60,9 @@ public class ShipController : NetworkBehaviour
 
     public override void OnStartClient()
     {
-        motorFoam.transform.localPosition = new Vector3(motorFoam.transform.localPosition.x,-2f,18f);
+        //ShipType tmp = PlayerStats.Instance.shipType;
+        InitializeShipType(ShipType.CORVETTE_GREEN);
+        CmdStartParticles();
         Debug.Log("clientStarted and particle pos updated");  
     }
 
@@ -92,6 +94,7 @@ public class ShipController : NetworkBehaviour
         
         }
 
+
         if(localVel.magnitude>0f){
             motorFoamEmission.rateOverTime = thrustPower * foamParticleMultiplier + foamParticleBase;
         }else{
@@ -119,5 +122,41 @@ public class ShipController : NetworkBehaviour
 
     void DoStartParticles(){
         motorFoam.Play();
+    }
+
+    void InitializeShipType(ShipType shipType){
+        string s_shipType;
+        Debug.Log("init ici");
+        GameObject shipObject;
+
+        switch (shipType)
+        {
+            case ShipType.CORVETTE:
+                s_shipType = "Corvette";
+                break;
+            case ShipType.CORVETTE_GREEN:
+                s_shipType = "CorvetteGreen";
+                break;
+            case ShipType.FRIGATE:
+                s_shipType = "Frigate";
+                break;
+            case ShipType.FRIGATE_GREEN: 
+                s_shipType = "Frigate_Green";
+                break;                      
+            default:
+                s_shipType = "Corvette";
+                break;
+        }
+        shipObject = gameObject.transform.Find(s_shipType).gameObject;
+        if(shipObject){
+            shipObject.SetActive(true);
+            Debug.Log(shipObject);
+        }else{
+            Debug.Log("shipObje bulunamadı");
+        }
+        gameObject.GetComponent<CameraController>().turret = shipObject.transform.Find("Weapons").Find("SmallTurret");
+        gameObject.GetComponent<ShootingController>().firePointTransform = shipObject.transform.Find("Weapons").Find("SmallTurret").Find("FirePointTransform");
+        gameObject.GetComponent<ShootingController>().FireParticle = shipObject.transform.Find("Weapons").Find("SmallTurret").Find("SmallExplosionEffect").GetComponent<ParticleSystem>();
+        motorFoam = shipObject.transform.Find("FoamParticle").GetComponent<ParticleSystem>();
     }
 }

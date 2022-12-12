@@ -20,6 +20,11 @@ public class PlayerStats : MonoBehaviour
         private set{ _playerName = value;}
     }
     
+    [SerializeField] ShipType _shipType = ShipType.CORVETTE;
+    public ShipType shipType{
+        get { return _shipType;}
+    }
+
     [SerializeField] private float _localPlayerMoney = 3500f;
     public float PlayerMoney{ 
         get{ return _localPlayerMoney;} 

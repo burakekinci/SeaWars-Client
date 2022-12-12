@@ -84,5 +84,5 @@ public class CameraController : NetworkBehaviour
         _currentTurretRotation = Vector3.SmoothDamp(_currentTurretRotation,turretNextRotation,ref _smoothTurretVelocity,_smoothTime);
         turret.eulerAngles = _currentTurretRotation;
     }
-
+    
 }

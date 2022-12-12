@@ -11,7 +11,7 @@ public class ShootingController : NetworkBehaviour
     public float fireCooldownInSeconds = 1f;
     public float launchVelocity = 750f;
     private float time;
-    [SerializeField] ParticleSystem FireParticle;
+    public ParticleSystem FireParticle;
 
     // Start is called before the first frame update
     void Start()
