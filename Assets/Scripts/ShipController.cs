@@ -61,7 +61,7 @@ public class ShipController : NetworkBehaviour
     public override void OnStartClient()
     {
         //ShipType tmp = PlayerStats.Instance.shipType;
-        InitializeShipType(ShipType.CORVETTE_GREEN);
+        InitializeShipType(ShipType.CORVETTE);
         CmdStartParticles();
         Debug.Log("clientStarted and particle pos updated");  
     }
@@ -128,7 +128,10 @@ public class ShipController : NetworkBehaviour
         string s_shipType;
         Debug.Log("init ici");
         GameObject shipObject;
+        Transform turretTransform;
+        NetworkTransform[] networkTransforms = gameObject.GetComponents<NetworkTransform>();
 
+        
         switch (shipType)
         {
             case ShipType.CORVETTE:
@@ -148,15 +151,24 @@ public class ShipController : NetworkBehaviour
                 break;
         }
         shipObject = gameObject.transform.Find(s_shipType).gameObject;
+        turretTransform = shipObject.transform.Find("Weapons").Find("SmallTurret");
+
         if(shipObject){
             shipObject.SetActive(true);
             Debug.Log(shipObject);
         }else{
             Debug.Log("shipObje bulunamadı");
         }
-        gameObject.GetComponent<CameraController>().turret = shipObject.transform.Find("Weapons").Find("SmallTurret");
-        gameObject.GetComponent<ShootingController>().firePointTransform = shipObject.transform.Find("Weapons").Find("SmallTurret").Find("FirePointTransform");
-        gameObject.GetComponent<ShootingController>().FireParticle = shipObject.transform.Find("Weapons").Find("SmallTurret").Find("SmallExplosionEffect").GetComponent<ParticleSystem>();
+
+        //Network transform of ship
+        networkTransforms[0].target = gameObject.transform;
+
+        //Network transform of turret
+        networkTransforms[1].target = shipObject.transform.Find("Weapons").Find("SmallTurret");
+
+        gameObject.GetComponent<CameraController>().turret = turretTransform;
+        gameObject.GetComponent<ShootingController>().firePointTransform = turretTransform.Find("FirePointTransform");
+        gameObject.GetComponent<ShootingController>().FireParticle = turretTransform.Find("SmallExplosionEffect").GetComponent<ParticleSystem>();
         motorFoam = shipObject.transform.Find("FoamParticle").GetComponent<ParticleSystem>();
     }
 }
