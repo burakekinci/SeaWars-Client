@@ -483,8 +483,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _mouseSensitivity: 1
-  turretRotateOffset: 10
-  lookUpLimit: 20
+  turretRotateOffset: 15
+  lookUpLimit: 2
   lookDownLimit: -20
   _target: {fileID: 3703354277834206434}
   turret: {fileID: 0}

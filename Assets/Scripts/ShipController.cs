@@ -61,7 +61,7 @@ public class ShipController : NetworkBehaviour
     public override void OnStartClient()
     {
         //ShipType tmp = PlayerStats.Instance.shipType;
-        InitializeShipType(ShipType.CORVETTE);
+        InitializeShipType(PlayerStats.Instance.SelectedShipType);
         CmdStartParticles();
         Debug.Log("clientStarted and particle pos updated");  
     }
