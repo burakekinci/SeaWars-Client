@@ -5,14 +5,16 @@ using UnityEngine.UI;
 
 public class ShipItemController : MonoBehaviour
 {
-    private List<Ship> ships;
+    //private List<Ship> ships;
     
     [SerializeField]
     private Text itemStatusText, itemShipName;
     private Sprite itemShipSprite;
     public int itemId;
     private float shipPrice;
-    private bool itemStatus;
+    private bool itemIsBoughtStatus;
+    
+    [SerializeField] int selectedItemId;
 
     private InventoryMenu inventoryMenu;
 
@@ -26,12 +28,12 @@ public class ShipItemController : MonoBehaviour
     private void OnEnable() {
         //read data from playerstats singleton
         
-        
     }
 
     private void Start() {
         SetShipProperties();
     }
+
     void SetShipProperties(){
         /* if( ){
             itemShipName.SetText(inventoryMenu.GetShipName(itemId));
@@ -45,33 +47,48 @@ public class ShipItemController : MonoBehaviour
                 itemStatusText.SetText("BUY (" + shipPrice+ "$)");
             }
         } */
-        ships = inventoryMenu.tmpPlayerShips;
+        /* ships = inventoryMenu.tmpPlayerShips;
         foreach(var ship in ships){
             if(ship.id.Equals(itemId)){
                 itemShipName.text = ship.name;
                 //todo set image sprite
                 if(ship.isBought){
-                    itemStatus = true;
+                    itemStatus = ItemStatus.BOUGHT;
                     itemStatusText.text = "EQUİPED";
                 }else{
-                    itemStatus=false;
+                    itemStatus= ItemStatus.NONBOUGHT;
                     itemStatusText.text = "BUY (" + shipPrice+ "$)";
                 }
                 break;
-            }
-        }
+            } 
+        }*/
+
+        itemShipName.text = inventoryMenu.GetShipName(itemId);
+        if(inventoryMenu.GetShipIsBoughtStatus(itemId) && !inventoryMenu.GetShipIsSelectedStatus(itemId)){
+            itemStatusText.text = "SELECT";
+        }else if(inventoryMenu.GetShipIsSelectedStatus(itemId)){
+            itemStatusText.text = "EQUIPPED";
+        }else{
+            itemStatusText.text = "BUY (" + shipPrice+ "$)";
+        }        
+
     }
 
-    public void OnClick_Buy(){
+    public void OnClick_BuyOrSelect(){
         Debug.Log(inventoryMenu.tmpPlayerMoney + " " + shipPrice);
-        if(inventoryMenu.tmpPlayerMoney>= shipPrice && !itemStatus){
-            itemStatusText.text = "EQUİPED";
+        if(inventoryMenu.tmpPlayerMoney>= shipPrice && !inventoryMenu.GetShipIsBoughtStatus(itemId)){
+            inventoryMenu.SetShipIsBoughtStatus(itemId,true);
+            selectedItemId = itemId;
             inventoryMenu.SetMoney(shipPrice);
-            inventoryMenu.SetShipStatus(itemId,true);
-            Debug.Log("alindi");
-        }else if(inventoryMenu.tmpPlayerMoney<shipPrice && !itemStatus){
-            Debug.Log("Yeterli Para yok");
+            Debug.Log("===GEMİ SATIN ALINDI===");
+        }else if(inventoryMenu.tmpPlayerMoney<shipPrice && !inventoryMenu.GetShipIsBoughtStatus(itemId)){
+            Debug.Log("===SATIN ALMAK İÇİN YETERLİ PARA YOK===");
+        }else if(inventoryMenu.GetShipIsBoughtStatus(itemId)){
+            inventoryMenu.SetShipIsSelectedStatus(itemId,true);   
         }
+        SetShipProperties();
     }
+
+    
 
 }

@@ -17,18 +17,19 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private string _playerName = "Player1";
     public string PlayerName { 
         get{ return _playerName;} 
-        private set{ _playerName = value;}
+        private set{}
     }
     
-    [SerializeField] ShipType _shipType = ShipType.CORVETTE;
-    public ShipType shipType{
-        get { return _shipType;}
+    [SerializeField] ShipType _selectedShipType = ShipType.CORVETTE;
+    public ShipType SelectedShipType{
+        get { return _selectedShipType;}
+        private set{}
     }
 
     [SerializeField] private float _localPlayerMoney = 3500f;
     public float PlayerMoney{ 
         get{ return _localPlayerMoney;} 
-        private set{_localPlayerMoney = value;}
+        private set{}
     }
 
     public void UpdateLocalPlayerMoney(float newMoney){
@@ -38,19 +39,45 @@ public class PlayerStats : MonoBehaviour
 
     private List<Ship> _localPlayerShips = new List<Ship>
     {
-        new Ship{id=1,name="Light Ship",isBought=true},
-        new Ship{id=2,name="Medium Ship",isBought=false},
-        new Ship{id=3,name="Large Ship",isBought=true},
-        new Ship{id=4,name="Heavy Ship",isBought=false}
+        new Ship{id=1,name="Corvet",isBought=true,isSelected=false},
+        new Ship{id=2,name="Corvet Green",isBought=false,isSelected=false},
+        new Ship{id=3,name="Frigate",isBought=true,isSelected=false},
+        new Ship{id=4,name="Frigate Green",isBought=false,isSelected=false}
     };
 
     public List<Ship> LocalPlayerShips {
         get{ return _localPlayerShips;}
-        private set{_localPlayerShips = value;}
+        private set{}
     }
 
     public void UpdateLocalPlayerShips(List<Ship> newShips){
         _localPlayerShips = newShips;
+        //Set selected ship type
+        Debug.Log("===UPDATE PLAYER SİNGLETON ÇALIŞTI===");
+        int index=1;
+        foreach(var ship in _localPlayerShips){
+            Debug.Log($"gemi: {ship.name}, alındı : {ship.isBought}, seçildi : {ship.isSelected}");
+            if(ship.isSelected){
+                switch(index){
+                    case 1:
+                        _selectedShipType = ShipType.CORVETTE;
+                        break;
+                    case 2:
+                        _selectedShipType = ShipType.CORVETTE_GREEN;
+                        Debug.Log("===CORVETTE GREEN SEÇİLDİ===");
+                        break;
+                    case 3:
+                        _selectedShipType = ShipType.FRIGATE;
+                        break;
+                    case 4:
+                        _selectedShipType = ShipType.FRIGATE_GREEN;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            index++;
+        } 
     }
 
     private void GetAPIData(){

@@ -35,10 +35,15 @@ public class InventoryMenu : MonoBehaviour
             Debug.Log("Para degisti " + tmpPlayerMoney);
         }
 
-        if(tmpPlayerShips != PlayerStats.Instance.LocalPlayerShips){
+        if(!tmpPlayerShips.Equals(PlayerStats.Instance.LocalPlayerShips)){
             //TODO: send update request to the cloud owned ships
             PlayerStats.Instance.UpdateLocalPlayerShips(tmpPlayerShips);
             Debug.Log("Gemi sahipliği değişti");
+        }else{
+            Debug.Log("listeler aynı");
+            foreach(var s in tmpPlayerShips){
+                Debug.Log($"{s.id},{s.isBought},{s.isSelected}");
+            }
         }
     }
 
@@ -55,13 +60,28 @@ public class InventoryMenu : MonoBehaviour
         return tmpPlayerShips.Find(item=> item.id == buttonId).name;
     }
 
-    public bool GetShipStatus(int buttonId){
+    public bool GetShipIsBoughtStatus(int buttonId){
         return tmpPlayerShips.Find(item=> item.id == buttonId).isBought;
     }
 
-    public void SetShipStatus(int buttonId, bool newStatus){
+    public void SetShipIsBoughtStatus(int buttonId, bool newStatus){
         tmpPlayerShips.Find(item=> item.id==buttonId).isBought = newStatus;
     }
 
+    public bool GetShipIsSelectedStatus(int buttonId){
+        return tmpPlayerShips.Find(item=> item.id == buttonId).isSelected;
+    }
+
+    public void SetShipIsSelectedStatus(int buttonId, bool newStatus){
+        tmpPlayerShips.Find(item=>item.id == buttonId).isSelected = newStatus;
+        //DeSelect others
+        foreach(var ship in tmpPlayerShips){
+            if(!ship.id.Equals(buttonId)){
+                ship.isSelected = false;
+            }
+        }
+    }
+
+    
 
 }

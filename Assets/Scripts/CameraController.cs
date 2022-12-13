@@ -53,7 +53,7 @@ public class CameraController : NetworkBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if(!isLocalPlayer){
             return;
