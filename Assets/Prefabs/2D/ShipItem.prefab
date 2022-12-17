@@ -123,7 +123,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5826456470762515734}
         m_TargetAssemblyTypeName: ShipItemController, Assembly-CSharp
-        m_MethodName: OnClick_Buy
+        m_MethodName: OnClick_BuyOrSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -424,6 +424,7 @@ MonoBehaviour:
   itemStatusText: {fileID: 0}
   itemShipName: {fileID: 0}
   itemId: 0
+  selectedItemId: 0
 --- !u!1 &4240339775934255032
 GameObject:
   m_ObjectHideFlags: 0

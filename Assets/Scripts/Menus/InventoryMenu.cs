@@ -1,67 +1,91 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class InventoryMenu : MonoBehaviour
 {
-    [SerializeField] public float tmpPlayerMoney{get;  set;}
-    [SerializeField] private Text playerMoneyText;
+    [SerializeField]
+    public float tmpPlayerMoney { get; set; }
 
-    public List<Ship> tmpPlayerShips{get; set;} 
+    [SerializeField]
+    private Text playerMoneyText;
 
-    private void Awake() {
+    public event Action ShipSelectEvent;
+
+    public List<Ship> tmpPlayerShips { get; set; }
+
+    private void Awake()
+    {
         playerMoneyText = transform.Find("MoneyInt_Label").GetComponent<Text>();
     }
 
-    public void OnClick_Back(){
-        MenuManager.OpenMenu(Menu.MAIN_MENU,gameObject);
+    public void OnClick_Back()
+    {
+        MenuManager.OpenMenu(Menu.MAIN_MENU, gameObject);
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         //TODO: refresh the playerstats via API
         tmpPlayerMoney = PlayerStats.Instance.GetUpdatedPlayerMoney();
         tmpPlayerShips = PlayerStats.Instance.GetUpdatedPlayerShips();
-        Debug.Log(tmpPlayerMoney);
         SetMoney();
-        Debug.Log("pencere acildi");
     }
 
-    private void OnDisable() {
-        Debug.Log("pencere kapandi");
-        if(tmpPlayerMoney != PlayerStats.Instance.PlayerMoney){
+    private void OnDisable()
+    {
+        if (tmpPlayerMoney != PlayerStats.Instance.PlayerMoney)
+        {
             //TODO: send update request to the cloud money
-            PlayerStats.Instance.UpdateLocalPlayerMoney(tmpPlayerMoney);
+            PlayerStats.Instance.UpdateLocalPlayerMoney (tmpPlayerMoney);
             Debug.Log("Para degisti " + tmpPlayerMoney);
         }
+    }
 
-        if(tmpPlayerShips != PlayerStats.Instance.LocalPlayerShips){
-            //TODO: send update request to the cloud owned ships
-            PlayerStats.Instance.UpdateLocalPlayerShips(tmpPlayerShips);
-            Debug.Log("Gemi sahipliği değişti");
+    public void SetMoney()
+    {
+        playerMoneyText.text = tmpPlayerMoney.ToString() + '$';
+    }
+
+    public void SetMoney(float price)
+    {
+        tmpPlayerMoney -= price;
+        playerMoneyText.text = tmpPlayerMoney.ToString() + '$';
+    }
+
+    public string GetShipName(int buttonId)
+    {
+        return tmpPlayerShips.Find(item => item.id == buttonId).name;
+    }
+
+    public bool GetShipIsBoughtStatus(int buttonId)
+    {
+        return tmpPlayerShips.Find(item => item.id == buttonId).isBought;
+    }
+
+    public void SetShipIsBoughtStatus(int buttonId, bool newStatus)
+    {
+        tmpPlayerShips.Find(item => item.id == buttonId).isBought = newStatus;
+    }
+
+    public bool GetShipIsSelectedStatus(int buttonId)
+    {
+        return tmpPlayerShips.Find(item => item.id == buttonId).isSelected;
+    }
+
+    public void SetShipIsSelectedStatus(int buttonId)
+    {
+        foreach (var ship in tmpPlayerShips)
+        {
+            ship.isSelected = ship.id == buttonId;
+        }
+
+        if (ShipSelectEvent != null)
+        {
+            ShipSelectEvent.Invoke();
         }
     }
-
-    public void SetMoney(){
-        playerMoneyText.text = tmpPlayerMoney.ToString()+'$';
-    }
-
-    public void SetMoney(float price){
-        tmpPlayerMoney -= price;
-        playerMoneyText.text = tmpPlayerMoney.ToString()+'$';
-    }
-
-    public string GetShipName(int buttonId){
-        return tmpPlayerShips.Find(item=> item.id == buttonId).name;
-    }
-
-    public bool GetShipStatus(int buttonId){
-        return tmpPlayerShips.Find(item=> item.id == buttonId).isBought;
-    }
-
-    public void SetShipStatus(int buttonId, bool newStatus){
-        tmpPlayerShips.Find(item=> item.id==buttonId).isBought = newStatus;
-    }
-
-
 }
