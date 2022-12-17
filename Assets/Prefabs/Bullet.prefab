@@ -132,6 +132,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   damagePower: 10
+  launchVelocity: 200
+  lifeTime: 5
+  explodeParticle: {fileID: 198000012942003240, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
 --- !u!96 &4149772903033116851
 TrailRenderer:
   serializedVersion: 2

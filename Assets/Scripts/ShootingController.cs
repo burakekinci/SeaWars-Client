@@ -5,18 +5,22 @@ using Mirror;
 
 public class ShootingController : NetworkBehaviour
 {
-    public GameObject bulletProjectile;
+    public Bullet bulletProjectile;
     public Transform firePointTransform;
-
+    
     public float fireCooldownInSeconds = 1f;
     public float launchVelocity = 750f;
     private float time;
+
+    [SyncVar] public  int health=30;
     public ParticleSystem FireParticle;
 
+    public GameObject hitMarker;
+ 
     // Start is called before the first frame update
     void Start()
     {
-       
+       hitMarker = GameObject.Find("Canvas").transform.Find("HitMarker").gameObject;
     }
 
     // Update is called once per frame
@@ -43,10 +47,29 @@ public class ShootingController : NetworkBehaviour
     void CMDFire(){
         time=0;
         RpcOnFire();
-        //FireParticle.Play();
-        GameObject launchedBullet =  Instantiate(bulletProjectile,firePointTransform.transform.position,firePointTransform.transform.rotation);
-        NetworkServer.Spawn(launchedBullet);
+        Bullet launchedBullet =  Instantiate(bulletProjectile,firePointTransform.transform.position,firePointTransform.transform.rotation);
+        launchedBullet.SetController(this);
+        NetworkServer.Spawn(launchedBullet.gameObject);
     }
 
+    [Client]
+    public void HitActive()
+    {
+        hitMarker.SetActive(true);
+        Invoke("HitDisable",0.25f);
+    }
+
+    void HitDisable()
+    {
+        hitMarker.SetActive(false);
+    }
+
+
+    [ClientRpc]
+    public void RpcOnDeath()
+    {
+        NetworkServer.Destroy(this.gameObject);
+        //ExplosionParticle.Play();
+    }
 
 }
