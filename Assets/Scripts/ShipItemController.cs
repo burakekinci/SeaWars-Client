@@ -15,6 +15,12 @@ public class ShipItemController : MonoBehaviour
     private float shipPrice;
     private bool itemIsBoughtStatus;
 
+   
+    public GameObject upgradeMenuObject;
+    
+    [SerializeField]
+    private GameObject upgradeButton;
+
     [SerializeField]
     private bool isBought;
 
@@ -33,6 +39,7 @@ public class ShipItemController : MonoBehaviour
         inventoryMenu =
             GameObject.Find("InventoryMenu").GetComponent<InventoryMenu>();
         shipPrice = GameStats.Instance.ShipPrices[itemId];
+        upgradeButton = transform.Find("ShipItemUpgrade").gameObject;
     }
 
     private void OnEnable()
@@ -59,10 +66,12 @@ public class ShipItemController : MonoBehaviour
         if (isBought)
         {
             itemStatusText.text = isSelected ? "EQUIPPED" : "SELECT";
+            upgradeButton.SetActive(true);
         }
         else
         {
             itemStatusText.text = "BUY (" + shipPrice + "$)";
+            upgradeButton.SetActive(false);
         }
     }
 
@@ -94,4 +103,11 @@ public class ShipItemController : MonoBehaviour
         }
         UpdateShipProperties();
     }
+
+    public void OnClick_Upgrade()
+    {
+        UpgradeMenu upgradeMenu = upgradeMenuObject.GetComponent<UpgradeMenu>();
+        upgradeMenu.OpenUpgradeMenu(itemId);
+    }
+
 }

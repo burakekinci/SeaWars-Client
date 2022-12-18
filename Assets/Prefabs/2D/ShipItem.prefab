@@ -328,7 +328,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2101938811676864862}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5826456470762515734}
+        m_TargetAssemblyTypeName: ShipItemController, Assembly-CSharp
+        m_MethodName: OnClick_Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2101938811693714329
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,10 +433,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96faf5b781d98e8419836c2a15908cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemId: 0
   itemStatusText: {fileID: 0}
   itemShipName: {fileID: 0}
-  itemId: 0
-  selectedItemId: 0
+  upgradeMenu: {fileID: 0}
+  isBought: 0
+  isSelected: 0
 --- !u!1 &4240339775934255032
 GameObject:
   m_ObjectHideFlags: 0

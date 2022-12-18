@@ -88,4 +88,9 @@ public class InventoryMenu : MonoBehaviour
             ShipSelectEvent.Invoke();
         }
     }
+
+    public void OnClick_Upgrade(int itemId)
+    {
+        Debug.Log("upgrade menu " + itemId);
+    }
 }
