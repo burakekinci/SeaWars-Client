@@ -9,6 +9,7 @@ public class HealthUpgrade : MonoBehaviour,IUpgrade
     //  UI'daki elementleri set et, bu sınıf UI'da kullanılacak... 
     //
 
+    [Header("Item Properties")]
     [SerializeField]
     private int upgradeItemId = 1;
 
@@ -18,40 +19,49 @@ public class HealthUpgrade : MonoBehaviour,IUpgrade
     [SerializeField]
     private int upgradePrice = 500;
 
+
+    [Header("UI Elements")]
     [SerializeField]
     private Text upgradeLabel;
 
+    [SerializeField]
+    private Button upgradeButton;
+
+
+    [Header("Hirerarchy Elements")]    
+    [SerializeField]
     public GameObject upgradeMenuObject;
-    
-    
+
+    [SerializeField]
+    public GameObject inventoryMenuObject;
     public GameObject[] levels;
 
+    
     private UpgradeMenu upgradeMenu;
     private InventoryMenu inventoryMenu;
   
+
     private void OnEnable() {
         InitProperties();
-        Debug.Log("init girdi");
     }
 
     private void OnDisable() {
         foreach(var i in levels){
             i.SetActive(false);
             upgradeLabel.text = "UPGRADE 500$";
-            transform.Find("UpgradeButton").GetComponent<Button>().interactable = true;
+            upgradeButton.interactable = true;
         }
     }
 
-    private void Start() {
-        upgradeLabel = transform.Find("UpgradeButton").Find("Upgrade_Label").GetComponent<Text>();
-        upgradeMenu = upgradeMenuObject.GetComponent<UpgradeMenu>();
+    private void Awake() {
     }
     
     public void InitProperties(){
+        upgradeMenu = upgradeMenuObject.GetComponent<UpgradeMenu>();
         upgradeItemLevel = upgradeMenu.GetUpgradeItemLevelById(upgradeItemId);
+        
         //upgradeMenu.GetUpgradeItemLevelById(upgradeItemId);
-        inventoryMenu =
-            GameObject.Find("InventoryMenu").GetComponent<InventoryMenu>();
+        inventoryMenu = inventoryMenuObject.GetComponent<InventoryMenu>();
         
         for(int i=0;i<upgradeItemLevel;i++)
         {
@@ -62,7 +72,7 @@ public class HealthUpgrade : MonoBehaviour,IUpgrade
         {
             //artık yapılacak upgrade kalmamış demektir.
             upgradeLabel.text = "FULL";
-            transform.Find("UpgradeButton").GetComponent<Button>().interactable = false;
+            upgradeButton.interactable = false;
         }
         
     }

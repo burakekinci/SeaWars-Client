@@ -211,6 +211,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 694665522}
     m_Modifications:
+    - target: {fileID: 2101938811024508861, guid: 427fc7dd948eae84d81424fc42800a59, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9a9fc3dedcf492a499b087eac6e67016, type: 3}
     - target: {fileID: 2101938811676864863, guid: 427fc7dd948eae84d81424fc42800a59, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1046,13 +1050,14 @@ GameObject:
   - component: {fileID: 373047222}
   - component: {fileID: 373047224}
   - component: {fileID: 373047223}
+  - component: {fileID: 373047225}
   m_Layer: 5
   m_Name: EngineUpgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &373047222
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1075,7 +1080,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -170}
+  m_AnchoredPosition: {x: 187.5, y: -170}
   m_SizeDelta: {x: 220, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &373047223
@@ -1116,6 +1121,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373047221}
   m_CullTransparentMesh: 1
+--- !u!114 &373047225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373047221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8177c494cd66c5a408aca842332db884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &431138467
 GameObject:
   m_ObjectHideFlags: 0
@@ -2494,13 +2511,14 @@ GameObject:
   - component: {fileID: 749110501}
   - component: {fileID: 749110503}
   - component: {fileID: 749110502}
+  - component: {fileID: 749110504}
   m_Layer: 5
   m_Name: WeaponUpgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &749110501
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2523,7 +2541,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 625, y: -170}
+  m_AnchoredPosition: {x: 375, y: -170}
   m_SizeDelta: {x: 220, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &749110502
@@ -2564,6 +2582,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749110500}
   m_CullTransparentMesh: 1
+--- !u!114 &749110504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749110500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93f0b8c307d1bf4428c3a9f552a7fe4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &813441931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2894,6 +2924,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 694665522}
     m_Modifications:
+    - target: {fileID: 2101938811024508861, guid: 427fc7dd948eae84d81424fc42800a59, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ac6170b3e2c9aee42a8b83d1a6b1b80e, type: 3}
     - target: {fileID: 2101938811676864863, guid: 427fc7dd948eae84d81424fc42800a59, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3839,6 +3873,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipItemId: 0
+  healthUpgrade: {fileID: 1510641160}
+  engineUpgrade: {fileID: 373047221}
+  weaponUpgrade: {fileID: 749110500}
 --- !u!1 &1279619545
 GameObject:
   m_ObjectHideFlags: 0
@@ -4556,7 +4593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1510641161
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4579,7 +4616,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 125, y: -170}
+  m_AnchoredPosition: {x: 375, y: -170}
   m_SizeDelta: {x: 220, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1510641162
@@ -4635,8 +4672,10 @@ MonoBehaviour:
   upgradeItemId: 1
   upgradeItemLevel: 0
   upgradePrice: 500
-  upgradeLabel: {fileID: 0}
+  upgradeLabel: {fileID: 1545169780}
+  upgradeButton: {fileID: 572907572}
   upgradeMenuObject: {fileID: 1271654984}
+  inventoryMenuObject: {fileID: 2013279307}
   levels:
   - {fileID: 1192676085}
   - {fileID: 2107264443}

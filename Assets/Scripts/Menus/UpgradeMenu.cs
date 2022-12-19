@@ -8,6 +8,16 @@ public class UpgradeMenu : MonoBehaviour
     private int shipItemId;
 
     private List<Ship> tmpPlayerShips;
+    
+    [SerializeField]
+    GameObject healthUpgrade;
+    
+    [SerializeField]
+    GameObject engineUpgrade;
+    
+    [SerializeField]
+    GameObject weaponUpgrade;
+
     public void OpenUpgradeMenu(int shipItemId)
     {
         this.shipItemId = shipItemId;
@@ -21,6 +31,10 @@ public class UpgradeMenu : MonoBehaviour
 
     private void OnEnable() {
         tmpPlayerShips = PlayerStats.Instance.GetUpdatedPlayerShips();
+        healthUpgrade.gameObject.SetActive(true);
+        engineUpgrade.gameObject.SetActive(true);
+        weaponUpgrade.gameObject.SetActive(true);
+
         Debug.Log($"Upgrade Menu {shipItemId} id'li gemiden açıldı");
     }
 
@@ -31,7 +45,14 @@ public class UpgradeMenu : MonoBehaviour
     public int GetUpgradeItemLevelById(int upgradeItemId)
     {
         Debug.Log(shipItemId + " idli geminin " + upgradeItemId + " idli itemi geldi..");
-        return tmpPlayerShips.Find(item => item.id == shipItemId).upgrades.Find(i=> i.id == upgradeItemId).level;
+        int? result = tmpPlayerShips.Find(item => item.id == shipItemId).upgrades.Find(i=> i.id == upgradeItemId).level; 
+        if(result==null)
+        {
+            Debug.Log("ItemLevel null döndü");
+            return 1;
+        }else{
+            return (int)result;  
+        } 
     }
 
     public void SetUpgradeItemLevelById(int upgradeItemId)
