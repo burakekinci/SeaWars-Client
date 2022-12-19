@@ -110,25 +110,29 @@ public class PlayerStats : MonoBehaviour
                     id = 1,
                     name = "Corvet",
                     isBought = true,
-                    isSelected = false
+                    isSelected = false,
+                    upgrades = new List<Upgrade>{ new Upgrade{id=1,level=1}, new Upgrade{id=2, level=1}, new Upgrade{id=3,level=2}}
                 },
                 new Ship {
                     id = 2,
                     name = "Corvet Green",
                     isBought = false,
-                    isSelected = false
+                    isSelected = false,
+                    upgrades = new List<Upgrade>{ new Upgrade{id=1,level=1}, new Upgrade{id=2, level=1}, new Upgrade{id=3,level=2}}
                 },
                 new Ship {
                     id = 3,
                     name = "Frigate",
                     isBought = true,
-                    isSelected = false
+                    isSelected = false,
+                    upgrades = new List<Upgrade>{ new Upgrade{id=1,level=1}, new Upgrade{id=2, level=1}, new Upgrade{id=3,level=2}}
                 },
                 new Ship {
                     id = 4,
                     name = "Frigate Green",
                     isBought = false,
-                    isSelected = false
+                    isSelected = false,
+                    upgrades = new List<Upgrade>{ new Upgrade{id=1,level=1}, new Upgrade{id=2, level=1}, new Upgrade{id=3,level=2}}
                 }
             };
 
