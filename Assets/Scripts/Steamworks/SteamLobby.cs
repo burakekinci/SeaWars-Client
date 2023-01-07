@@ -67,10 +67,8 @@ public class SteamLobby : MonoBehaviour
     private void OnLobbyEntered(LobbyEnter_t callback)
     {
         //Herkes için
+        CurrentLobbyID = callback.m_ulSteamIDLobby;
        
-        //CurrentLobbyID = callback.m_ulSteamIDLobby;
-       
-
 
         //Clientlar için
         if(NetworkServer.active) { return;}
