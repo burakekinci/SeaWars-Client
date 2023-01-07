@@ -14,7 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/GerstnerWave.unity
     guid: 68721b6eec19f8a4f95d495b97a1fe48
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Multiplayer.unity
     guid: 96f4d8c03545d204590b5001d74fd1a4
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 8ee63518330300249b5e03fea66d5a27
   m_configObjects: {}
