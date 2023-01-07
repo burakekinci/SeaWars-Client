@@ -40,7 +40,6 @@ public class ShipItemController : MonoBehaviour
             GameObject.Find("InventoryMenu").GetComponent<InventoryMenu>();
         shipPrice = GameStats.Instance.ShipPrices[itemId];
         upgradeButton = transform.Find("ShipItemUpgrade").gameObject;
-        UpdateShipProperties();
     }
 
     private void OnEnable()
