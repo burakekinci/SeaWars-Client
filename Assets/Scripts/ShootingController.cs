@@ -11,7 +11,7 @@ public class ShootingController : NetworkBehaviour
     
     public float fireCooldownInSeconds = 1f;
     public float launchVelocity = 750f;
-    private float time;
+    public float time;
 
     [SyncVar] public  int health=30;
     public ParticleSystem FireParticle;
@@ -28,10 +28,11 @@ public class ShootingController : NetworkBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        float nextTimeToFire = 1 / fireCooldownInSeconds;
+        //float nextTimeToFire = 1 / fireCooldownInSeconds;
         if(isLocalPlayer)
         {
-            if(Input.GetButtonDown("Fire1") && time>= nextTimeToFire){
+            if(Input.GetButtonDown("Fire1") && time>= fireCooldownInSeconds){
+                time = 0;
                 CMDFire();
             }   
                     
@@ -49,7 +50,7 @@ public class ShootingController : NetworkBehaviour
 
     [Command]
     void CMDFire(){
-        time=0;
+        //time=0;
         RpcOnFire();
         Bullet launchedBullet =  Instantiate(bulletProjectile,firePointTransform.transform.position,firePointTransform.transform.rotation);
         launchedBullet.SetController(this);

@@ -83,7 +83,8 @@ public class SteamLobby : MonoBehaviour
 
     public void OnLobbyLeaved()
     {
-        //manager.StopClient();
+        manager.StopClient();
+        manager.StopHost();
         SteamMatchmaking.LeaveLobby(new CSteamID(CurrentLobbyID));
     }
 

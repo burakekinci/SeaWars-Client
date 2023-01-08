@@ -5,8 +5,22 @@ using UnityEngine;
 
 public class OceanReader : MonoBehaviour
 {
-    public Transform ocean;
-    Material oceanMat;
+    public static OceanReader Instance;
+    
+    private void Awake() {
+        if(Instance != null)
+        {
+            Destroy(this); 
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(Instance);
+        }
+    }
+
+    //public Transform ocean;
+    public Material oceanMat;
 
     [SerializeField]
     private Vector4 timeScales;
@@ -35,11 +49,13 @@ public class OceanReader : MonoBehaviour
     private float depth;
     [SerializeField]
     private float phase;
+    [SerializeField]
+    private float result;
 
     // Start is called before the first frame update
     void Start()
     {
-        oceanMat = ocean.GetComponent<Renderer>().sharedMaterial;
+        //oceanMat = ocean.GetComponent<Renderer>().sharedMaterial;
         InitializeVariables();
     }
 
@@ -65,8 +81,7 @@ public class OceanReader : MonoBehaviour
 
     public float HeightOfVertex(Vector3 position)
     {
-        float result = DisplacementY(position).y;
-        Debug.Log($"Result is {result}");
+        result = DisplacementY(position).y;
         return result;
     }
 
@@ -98,7 +113,7 @@ public class OceanReader : MonoBehaviour
         return transform.TransformPoint(GerstnerWaveY(direction1, position, amplitude1, timeScales.x * Time.time) + 
                GerstnerWaveY(direction2, position, amplitude2, timeScales.y * Time.time) +
                GerstnerWaveY(direction3, position, amplitude3, timeScales.z * Time.time) +
-               GerstnerWaveY(direction4, position, amplitude4, timeScales.w * Time.time) + 
-               position);
+               GerstnerWaveY(direction4, position, amplitude4, timeScales.w * Time.time)
+        );
     }
 }

@@ -16,7 +16,8 @@ public class BuoyancyObject : MonoBehaviour
 
 
 
-    OceanReader oceanReader;
+    [SerializeField]
+    //private OceanReader oceanReader;
     Rigidbody m_rigidbody;
     bool underWater;
 
@@ -26,7 +27,7 @@ public class BuoyancyObject : MonoBehaviour
     void Start()
     {
         m_rigidbody = GetComponent<Rigidbody>();
-        oceanReader = FindObjectOfType<OceanReader>();
+        //oceanReader = FindObjectOfType<OceanReader>();
     }
 
     // Update is called once per frame
@@ -35,7 +36,7 @@ public class BuoyancyObject : MonoBehaviour
         floatersUnderWater = 0;
         for(int i=0; i < floaters.Length; i++)
         {                                             //oceanReader.HeightOfVertex(floaters[i].position)
-            float difference = floaters[i].position.y - 1;
+            float difference = floaters[i].position.y - OceanReader.Instance.HeightOfVertex(floaters[i].position);
 
             if (difference < 0)
             {

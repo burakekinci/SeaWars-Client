@@ -30,8 +30,6 @@ public class ShipController : NetworkBehaviour
     public Camera playerCamera;
     public float maxSpeed;
     
-    bool isPositonset = false;
-
     private void Awake() {
         Debug.Log("awaked");
     }
@@ -75,12 +73,6 @@ public class ShipController : NetworkBehaviour
 
     void FixedUpdate()
     {
-
-        if(!isPositonset)
-        {
-            isPositonset = true;
-            gameObject.transform.position = new Vector3(Random.Range(25,100), 35, 5);
-        }
 
         var localVel = transform.InverseTransformDirection(rb.velocity);
         if(isLocalPlayer)

@@ -28,12 +28,21 @@ public class CustomNetworkManager : NetworkManager
     {
         if(SceneManager.GetActiveScene().name == "Lobby")
         {
-            PlayerObjectController GamePlayerInstance = Instantiate(GamePlayerPrefab);
+            Transform startPos = GetStartPosition();
+
+            PlayerObjectController GamePlayerInstance = startPos != null
+                ? Instantiate(GamePlayerPrefab,startPos.position, startPos.rotation)
+                : Instantiate(GamePlayerPrefab);
+            
             GamePlayerInstance.ConnectionID = conn.connectionId;
             GamePlayerInstance.PlayerIdNumber = GamePlayers.Count + 1;
             GamePlayerInstance.PlayerSteamID = (ulong)SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.Instance.CurrentLobbyID, GamePlayers.Count);
 
             NetworkServer.AddPlayerForConnection(conn, GamePlayerInstance.gameObject);
+
+            GamePlayerInstance.gameObject.GetComponent<ShipController>().enabled = false;
+            GamePlayerInstance.gameObject.GetComponent<ShootingController>().enabled = false;
+            GamePlayerInstance.gameObject.GetComponent<CameraController>().enabled = false;
 
         }
 
@@ -45,16 +54,25 @@ public class CustomNetworkManager : NetworkManager
         if(sceneName == "Multiplayer")
         {
             Debug.Log("sahne değişmiş...");
+
+            Transform startPos = GetStartPosition();
+
             foreach (var item in GamePlayers)
             {
-                item.gameObject.SetActive(true);
+                item.gameObject.GetComponent<ShipController>().enabled = true;
+                item.gameObject.GetComponent<ShootingController>().enabled = true;
+                item.gameObject.GetComponent<CameraController>().enabled = true;
             }
+            Debug.Log("kontrol izinleri verildi...");
         }
+
     }
+
+    
 
     public override void OnClientDisconnect()
     {
-        //SceneManager.LoadScene(offlineScene, LoadSceneMode.Single);
+        SceneManager.LoadScene(offlineScene, LoadSceneMode.Single);
     }
 
     public void StartGame(string SceneName)
