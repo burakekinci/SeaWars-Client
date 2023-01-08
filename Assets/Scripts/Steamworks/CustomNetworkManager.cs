@@ -7,6 +7,20 @@ using Steamworks;
 
 public class CustomNetworkManager : NetworkManager
 {
+
+    public static CustomNetworkManager Instance {get; private set;}
+
+    public override void Awake() {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     [SerializeField] private PlayerObjectController GamePlayerPrefab;
     public List<PlayerObjectController> GamePlayers {get;} = new List<PlayerObjectController>();
 
@@ -40,7 +54,7 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnClientDisconnect()
     {
-        SceneManager.LoadScene(offlineScene, LoadSceneMode.Single);
+        //SceneManager.LoadScene(offlineScene, LoadSceneMode.Single);
     }
 
     public void StartGame(string SceneName)

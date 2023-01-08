@@ -21,7 +21,7 @@ public class ShootingController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       hitMarker = GameObject.Find("Canvas").transform.Find("HitMarker").gameObject;
+       //hitMarker = GameObject.Find("Canvas").transform.Find("HitMarker").gameObject;
     }
 
     // Update is called once per frame
