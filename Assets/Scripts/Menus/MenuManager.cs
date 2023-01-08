@@ -17,8 +17,8 @@ public static class MenuManager
 
     public static void OpenMenu(Menu menu, GameObject callingMenu){
         
-        if(!IsInıtialized)
-            Init();
+        //if(!IsInıtialized)
+        Init();
 
         switch(menu)
         {

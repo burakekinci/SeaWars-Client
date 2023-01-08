@@ -229,7 +229,7 @@ public class LobbyController : MonoBehaviour
         {
             foreach(PlayerListItem playerListItemToRemove in playerListItemsToRemove)
             {
-                GameObject objectToRemove = playerListItemToRemove.gameObject;
+                GameObject objectToRemove = playerListItemToRemove?.gameObject;
                 playerListItems.Remove(playerListItemToRemove);
                 Destroy(objectToRemove);
                 objectToRemove = null;
@@ -241,4 +241,10 @@ public class LobbyController : MonoBehaviour
     {
         localPlayerController.CanStartGame(SceneName);
     }
+
+    public void LeaveLobby()
+    {
+        manager.GetComponent<SteamLobby>().OnLobbyLeaved();
+    }
+
 }

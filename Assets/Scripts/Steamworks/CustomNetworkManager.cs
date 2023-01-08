@@ -22,11 +22,31 @@ public class CustomNetworkManager : NetworkManager
             NetworkServer.AddPlayerForConnection(conn, GamePlayerInstance.gameObject);
 
         }
+
+        
+    }
+
+    public override void OnServerSceneChanged(string sceneName)
+    {
+        if(sceneName == "Multiplayer")
+        {
+            Debug.Log("sahne değişmiş...");
+            foreach (var item in GamePlayers)
+            {
+                item.gameObject.SetActive(true);
+            }
+        }
+    }
+
+    public override void OnClientDisconnect()
+    {
+        SceneManager.LoadScene(offlineScene, LoadSceneMode.Single);
     }
 
     public void StartGame(string SceneName)
     {
         ServerChangeScene(SceneName);
     }
+
 
 }

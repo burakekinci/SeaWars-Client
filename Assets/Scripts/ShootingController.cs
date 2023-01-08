@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Mirror;
 
 public class ShootingController : NetworkBehaviour
@@ -35,7 +36,10 @@ public class ShootingController : NetworkBehaviour
             }   
                     
         }
-
+        if(hitMarker == null && SceneManager.GetActiveScene().name == "Multiplayer")
+        {
+            hitMarker = GameObject.Find("Canvas").transform.Find("HitMarker").gameObject;
+        }
     }
 
     [ClientRpc]

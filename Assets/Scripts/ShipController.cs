@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Mirror;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -46,7 +47,11 @@ public class ShipController : NetworkBehaviour
        
 
         if(isLocalPlayer){
-            playerCamera = Instantiate(cameraPrefab,transform.position,Quaternion.identity);
+            if(SceneManager.GetActiveScene().name == "Multiplayer")
+            {
+                playerCamera = Instantiate(cameraPrefab,transform.position,Quaternion.identity);
+            }
+            Debug.Log("Local playera girdi.. kamera instantiate etmeli...");
             
         }else{
             if(playerCamera!=null)

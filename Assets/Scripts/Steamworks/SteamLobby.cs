@@ -15,6 +15,7 @@ public class SteamLobby : MonoBehaviour
     protected Callback<GameLobbyJoinRequested_t> JoinRequest;
     protected Callback<LobbyEnter_t> LobbyEntered;
 
+
     //Variables
     public ulong CurrentLobbyID;
     private const string HostAdressKey = "HostAddress";
@@ -78,6 +79,12 @@ public class SteamLobby : MonoBehaviour
         manager.StartClient();
 
         Debug.Log("Entered to lobby");
+    }
+
+    public void OnLobbyLeaved()
+    {
+        manager.StopClient();
+        SteamMatchmaking.LeaveLobby(new CSteamID(CurrentLobbyID));
     }
 
 }

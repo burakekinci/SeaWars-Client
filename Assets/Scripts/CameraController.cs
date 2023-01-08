@@ -58,7 +58,8 @@ public class CameraController : NetworkBehaviour
         if(!isLocalPlayer){
             return;
         }
-        mainCamera = gameObject.GetComponent<ShipController>().playerCamera;
+        //mainCamera = gameObject.GetComponent<ShipController>().playerCamera;
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         if(mainCamera == null){
             return;
         }
